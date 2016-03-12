@@ -23,7 +23,8 @@ $(document).ready(function() {
             $("stuff").html("Loading...");
 
             $('button').prop('disabled', true);
-            $.get( "http://45.55.144.205:8000/?text=" + term, function( data ) {
+            var request = $.get( "http://45.55.32.118:8000/?text=" + term);
+	    request.success (function( data ){
                 photos = JSON.parse(data);
                 console.log(photos);
                 html = ""
@@ -59,6 +60,10 @@ $(document).ready(function() {
                     scrollTop: $( $("#main") ).offset().top
                 }, 400);
             });
+	    request.error(function() {
+		$("#loading").html('<div class="alert alert-danger" role="alert">Something went wrong. The server might be down.</div>');
+		$('button').prop('disabled', false);
+	    });
         }
     })
 
